@@ -16,10 +16,10 @@
           <thead>
             <tr>
               <th scope="col">Image</th>
-              <th scope="col">Title</th>
-              <th scope="col">Description</th>
-              <th scope="col">Price</th>
-              <th scope="col">Email</th>
+              <th scope="col" [appSort]="pageItems" data-order="desc" data-name="title">Title</th>
+              <th scope="col" [appSort]="pageItems" data-order="desc" data-name="description">Description</th>
+              <th scope="col" [appSort]="pageItems" data-order="desc" data-name="price">Price</th>
+              <th scope="col" [appSort]="pageItems" data-order="desc" data-name="email">Email</th>
               <th scope="col"></th>
             </tr>
           </thead>

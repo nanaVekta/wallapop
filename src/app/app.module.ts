@@ -10,13 +10,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { ToastrModule } from 'ngx-toastr';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { FilterPipe } from './pipes/filter.pipe';
+import { FormsModule } from '@angular/forms';
+import { SortDirective } from './directives/sort.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     NavbarComponent,
-    PaginationComponent
+    PaginationComponent,
+    FilterPipe,
+    SortDirective
   ],
   imports: [
     BrowserModule,
@@ -24,7 +29,8 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     HttpClientModule,
     BrowserAnimationsModule,
     NgxUiLoaderModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

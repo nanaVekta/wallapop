@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit {
   items!: IItem[];
   itemsState!: IItem[];
   pageItems!: IItem[];
+  searchTerm!: string;
 
   constructor(
     private apiService: ApiServiceService,
