@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 export class HomeComponent implements OnInit {
 
   items!: IItem[];
+  itemsState!: IItem[];
   pageItems!: IItem[];
 
   constructor(
@@ -29,7 +30,7 @@ export class HomeComponent implements OnInit {
     this.apiService.getItems()
     .subscribe(
       data => {
-        this.items = data.items;
+        this.itemsState = this.items = data.items;
         this.pageItems = this.items.slice(0, 5);
         this.ngxUiLoader.stop();
       },
@@ -44,5 +45,21 @@ export class HomeComponent implements OnInit {
   onChangePage(pageItems: Array<any>) {
     // update current page of items
     this.pageItems = pageItems;
+  }
+
+  searchItem(event: any) {
+    // get value from search box
+    let value = event.target.value;
+
+    // set items to search to actual data retrieved from api
+    this.items = this.itemsState;
+
+    // filter items
+    let filteredItems = this.items.filter(item => {
+      return item.title.toLowerCase().includes(value.toLowerCase()) ||
+      item.price.toString().includes(value) ||
+      item.email.toLowerCase().includes(value.toLowerCase());
+    });
+    this.items = filteredItems;
   }
 }
