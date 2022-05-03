@@ -7,3 +7,24 @@
     color: $primary-color;
   }
 }
+
+.page-link {
+  color: $primary-color;
+
+  &:hover {
+    color: $primary-color;
+  }
+
+  &:focus {
+    color: $primary-color;
+  }
+}
+
+.page-item {
+
+  &.active .page-link {
+    @include gradient-bg($primary-color);
+    border-color: $primary-color;
+  }
+
+}
