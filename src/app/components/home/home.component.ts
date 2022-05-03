@@ -3,6 +3,7 @@ import { ApiServiceService } from '../../services/api-service.service';
 import { IItem } from '../../interfaces/items';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { ToastrService } from 'ngx-toastr';
+import { containsObject } from '../../helpers/containsObject';
 
 @Component({
   selector: 'app-home',
@@ -15,6 +16,7 @@ export class HomeComponent implements OnInit {
   itemsState!: IItem[];
   pageItems!: IItem[];
   searchTerm!: string;
+  favoriteItems: IItem[] = [];
 
   constructor(
     private apiService: ApiServiceService,
@@ -62,5 +64,15 @@ export class HomeComponent implements OnInit {
       item.email.toLowerCase().includes(value.toLowerCase());
     });
     this.items = filteredItems;
+  }
+
+  addToFavorite(item: IItem){
+    // check if object item is not already in the array then push in to array
+    if(!containsObject(item, this.favoriteItems)){
+      this.favoriteItems.push(item);
+      this.toastr.success('Item added to favorites');
+    } else {
+      this.toastr.error('Item already added to favorites')
+    }
   }
 }
