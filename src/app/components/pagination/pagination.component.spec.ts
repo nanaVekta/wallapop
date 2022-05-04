@@ -94,4 +94,15 @@ describe('PaginationComponent', () => {
     expect(component.pager.currentPage).toBe(5);
     expect(component.pager.totalPages).toBe(6);
   });
+
+  it('should set page number if maxPages is less than total pages and current page is less than maxPagesBeforeCurrentPage', () => {
+    component.items = [mockItem, mockItem, mockItem, mockItem, mockItem, mockItem];
+    component.pageSize = 1;
+    component.maxPages = 5;
+    component.setPage(1);
+    expect(component.pager.totalItems).toBe(6);
+    expect(component.pager.currentPage).toBe(1);
+    expect(component.pager.totalPages).toBe(6);
+  });
+  
 });

@@ -75,4 +75,9 @@ describe('HomeComponent', () => {
     component.searchItem(term);
     expect(component.items.length).toBeLessThanOrEqual(0);
   });
+
+  it('should pageItem from pagination', () => {
+    component.onChangePage([mockItem]);
+    expect(component.pageItems).toEqual([mockItem]);
+  })
 });
