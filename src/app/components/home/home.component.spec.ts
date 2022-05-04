@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ToastrModule } from 'ngx-toastr';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 import { HomeComponent } from './home.component';
 import { ApiServiceService } from '../../services/api-service.service';
@@ -9,8 +9,10 @@ import { apiServiceStub, mockItem } from '../../mocks/apiService.mock';
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
+  let toastrService: jasmine.SpyObj<ToastrService>;
 
   beforeEach(async () => {
+    toastrService = jasmine.createSpyObj<ToastrService>('ToasterService', ['error', 'success']);
     await TestBed.configureTestingModule({
       declarations: [ HomeComponent ],
       imports: [
@@ -18,7 +20,8 @@ describe('HomeComponent', () => {
         ToastrModule.forRoot(),
       ],
       providers: [
-        {provide: ApiServiceService, useValue: apiServiceStub}
+        {provide: ApiServiceService, useValue: apiServiceStub},
+        { provide: ToastrService, useValue: toastrService }
       ]
     })
     .compileComponents();
@@ -40,7 +43,15 @@ describe('HomeComponent', () => {
 
   it('should add item to favorite', () => {
     component.addToFavorite(mockItem);
+    expect(toastrService.success).toHaveBeenCalledWith('Item added to favorites');
     expect(component.favoriteItems.length).toBeGreaterThan(0);
+  });
+
+  it('should return an error if item is already added to favorite', () => {
+    component.addToFavorite(mockItem);
+    component.addToFavorite(mockItem);
+    expect(toastrService.error).toHaveBeenCalledWith('Item already added to favorites');
+    expect(component.favoriteItems.length).toBeGreaterThanOrEqual(1);
   });
 
   it('should return an item if search term is found', () => {

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SortDirective } from './sort.directive';
+import { mockItems } from '../mocks/apiService.mock';
 
 @Component({
   template: `
@@ -30,35 +31,14 @@ import { SortDirective } from './sort.directive';
   `
 })
 class TestComponent {
-  pageItems: Array<any> = [
-    {
-			"title": "iPhone 6S Oro",
-			"description": "Vendo un iPhone 6 S color Oro nuevo y sin estrenar. Me han dado uno en el trabajo y no necesito el que me compré. En tienda lo encuentras por 749 euros y yo lo vendo por 740. Las descripciones las puedes encontrar en la web de apple. Esta libre.",
-			"price": "740",
-			"email": "iphonemail@wallapop.com",
-			"image": "https://frontend-tech-test-data.s3-eu-west-1.amazonaws.com/img/iphone.png"
-		},
-		{
-			"title": "Polaroid 635",
-			"description": "Cámara clásica de fotos Polaroid, modelo 635. Las fotos son a super color. Está en perfectas condiciones y es fantástica para coleccionistas. Se necesitan carretes instax 20 para hacer fotos. Tamaño M.",
-			"price": "50",
-			"email": "cameramail@wallapop.com",
-			"image": "https://frontend-tech-test-data.s3-eu-west-1.amazonaws.com/img/camera.png"
-		},
-		{
-			"title": "Bolso piel marca Hoss",
-			"description": "Vendo bolso de piel marrón grande de la marca Hoss. Lo compré hace dos temporadas. Esta en perfectas condiciones, siempre se ha guardado en bolsa de tela para su conservación. Precio original de 400 euros. Lo vendo por 250 porque ya casi no me lo pongo. Tiene varios compartimentos dentro.",
-			"price": "250",
-			"email": "bagmail@wallapop.com",
-			"image": "https://frontend-tech-test-data.s3-eu-west-1.amazonaws.com/img/bag.png"
-		}
-  ];
+  pageItems: Array<any> = mockItems;
 
 }
 
 describe('SortDirective', () => {
   let fixture: ComponentFixture<TestComponent>;
   let des: any;
+  let elOrder: any;
 
   beforeEach(() => {
     fixture = TestBed.configureTestingModule({
@@ -71,16 +51,31 @@ describe('SortDirective', () => {
 
   // all elements with an attached sort directive
    des = fixture.debugElement.queryAll(By.directive(SortDirective));
+
+   // all elements with data-order
+    elOrder = fixture.debugElement.queryAll(By.css('[data-order]'));
+
   });
 
   it('should have four sort elements', () => {
     expect(des.length).toBe(4);
   });
 
-  it('should sort by title', () => {
+  it('should have four data-order elements', () => {
+    expect(elOrder.length).toBe(4);
+  })
+
+  it('should sort by title in desc', () => {
     des[0].triggerEventHandler('click', null);
     fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('td:nth-child(2)')).nativeElement.innerHTML).toBe('Polaroid 635');
+  });
+
+  it('should sort by title in asc', () => {
+    elOrder[0].nativeElement.setAttribute('data-order', 'asc');
+    des[0].triggerEventHandler('click', null);
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css('td:nth-child(2)')).nativeElement.innerHTML).toBe('Bolso piel marca Hoss');
   });
 
   it('should sort by description', () => {
@@ -89,15 +84,36 @@ describe('SortDirective', () => {
     expect(fixture.debugElement.query(By.css('td:nth-child(3)')).nativeElement.innerHTML).toBe('Vendo un iPhone 6 S color Oro nuevo y sin estrenar. Me han dado uno en el trabajo y no necesito el que me compré. En tienda lo encuentras por 749 euros y yo lo vendo por 740. Las descripciones las puedes encontrar en la web de apple. Esta libre.');
   });
 
+  it('should sort by description in asc', () => {
+    elOrder[1].nativeElement.setAttribute('data-order', 'asc');
+    des[1].triggerEventHandler('click', null);
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css('td:nth-child(3)')).nativeElement.innerHTML).toBe('Cámara clásica de fotos Polaroid, modelo 635. Las fotos son a super color. Está en perfectas condiciones y es fantástica para coleccionistas. Se necesitan carretes instax 20 para hacer fotos. Tamaño M.');
+  });
+
   it('should sort by price', () => {
     des[2].triggerEventHandler('click', null);
     fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('td:nth-child(4)')).nativeElement.innerHTML).toBe('740');
   });
 
+  it('should sort by price in asc', () => {
+    elOrder[2].nativeElement.setAttribute('data-order', 'asc');
+    des[2].triggerEventHandler('click', null);
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css('td:nth-child(4)')).nativeElement.innerHTML).toBe('50');
+  });
+
   it('should sort by email', () => {
     des[3].triggerEventHandler('click', null);
     fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('td:nth-child(5)')).nativeElement.innerHTML).toBe('iphonemail@wallapop.com');
+  });
+
+  it('should sort by email in asc', () => {
+    elOrder[3].nativeElement.setAttribute('data-order', 'asc');
+    des[3].triggerEventHandler('click', null);
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css('td:nth-child(5)')).nativeElement.innerHTML).toBe('bagmail@wallapop.com');
   })
 });

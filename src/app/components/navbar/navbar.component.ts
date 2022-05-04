@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { IItem } from '../../interfaces/items';
@@ -12,7 +13,7 @@ export class NavbarComponent implements OnInit {
   modalRef?: BsModalRef;
   searchTerm!: string;
 
-  constructor(private modalService: BsModalService) { }
+  constructor(private modalService: BsModalService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
   }
@@ -25,6 +26,9 @@ export class NavbarComponent implements OnInit {
     const index = this.favoriteItems.indexOf(item);
     if (index > -1) {
       this.favoriteItems.splice(index, 1);
+      this.toastr.success('Item has been removed from your favorites')
+    } else{
+      this.toastr.error('Fatal error');
     }
   }
 }
