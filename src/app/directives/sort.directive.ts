@@ -18,7 +18,7 @@ export class SortDirective {
     const order = elem.getAttribute("data-order");
 
     const property = elem.getAttribute("data-name");
-    
+
     if (order === "desc") {
       this.appSort.sort(sort.startSort(property, order));
       elem.setAttribute("data-order", "asc");
