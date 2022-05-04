@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef } from '@angular/core';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { IItem } from '../../interfaces/items';
 
 @Component({
   selector: 'app-navbar',
@@ -6,10 +8,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
+  @Input() favoriteItems!: Array<any>;
+  modalRef?: BsModalRef;
+  searchTerm!: string;
 
-  constructor() { }
+  constructor(private modalService: BsModalService) { }
 
   ngOnInit(): void {
   }
 
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+  }
+
+  removeFromFav(item: IItem) {
+    const index = this.favoriteItems.indexOf(item);
+    if (index > -1) {
+      this.favoriteItems.splice(index, 1);
+    }
+  }
 }

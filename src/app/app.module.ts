@@ -13,6 +13,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { FilterPipe } from './pipes/filter.pipe';
 import { FormsModule } from '@angular/forms';
 import { SortDirective } from './directives/sort.directive';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { SortDirective } from './directives/sort.directive';
     BrowserAnimationsModule,
     NgxUiLoaderModule,
     ToastrModule.forRoot(),
-    FormsModule
+    FormsModule,
+    ModalModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

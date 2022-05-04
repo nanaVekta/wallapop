@@ -1,9 +1,10 @@
+<app-navbar [favoriteItems]="favoriteItems"></app-navbar>
 <div class="container">
   <div class="row mt-5">
     <div class="col-sm-4"></div>
     <div class="col-sm-4">
       <div class="form-group">
-        <input class="form-control" type="text" placeholder="Input search term and press enter" (keyup)="searchItem($event)">
+        <input class="form-control" type="text" placeholder="Input search term" (keyup)="searchItem($event)">
       </div>
     </div>
     <div class="col-sm-4"></div>
@@ -26,14 +27,14 @@
           <tbody>
             <tr *ngFor="let item of pageItems">
               <td>
-                <img [src]="item.image" class="img-thumbnail" width="200" [alt]="item.title">
+                <img [src]="item.image" class="img-fluid img-thumbnail" width="200" [alt]="item.title">
               </td>
               <td>{{item.title}}</td>
               <td>{{item.description}}</td>
               <td>{{item.price}}</td>
               <td>{{item.email}}</td>
               <td>
-                <button class="btn btn-sm btn-danger" (click)="addToFavorite(item)">Add To Favorite</button>
+                <button class="btn btn-sm btn-success" (click)="addToFavorite(item)">Add To Favorite</button>
               </td>
             </tr>
           </tbody>
