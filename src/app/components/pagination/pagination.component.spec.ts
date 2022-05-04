@@ -24,6 +24,12 @@ describe('PaginationComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should detect change', () => {
+    component.items = [mockItem];
+    component.ngOnChanges({items: {currentValue: [mockItem], isFirstChange: ()=> { return false}, firstChange: false, previousValue: [mockItem]}});
+    expect(component.pager.totalItems).toBe(1);
+  })
+
   it('should set page number', () => {
     component.items = [mockItem];
     component.pageSize = 5;

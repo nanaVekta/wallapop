@@ -42,7 +42,6 @@ describe('FilterPipe', () => {
   it('should return an empty array if no items are passed', () => {
     expect(pipe.transform([], 'email', 'hgjjghg').length).toBeLessThanOrEqual(0);
     expect(pipe.transform([], 'email', 'hgjjghg')).toEqual([]);
-
   });
 
   it('should return all items if no field is passed', () => {
